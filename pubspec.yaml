@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.4+6
-  geolocator: ^5.1.5
+  location: ^2.3.5
 
 
 

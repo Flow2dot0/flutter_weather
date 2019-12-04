@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b63a8f2-ee1d-4c26-b3ed-67d0227088c1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/img/day.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/img/night.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/img/rain.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/logo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/app.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app.dill.track.dill.incremental.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/app.dill.track.dill.incremental.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,6 +77,7 @@
       <workItem from="1575376073607" duration="8053000" />
       <workItem from="1575409258550" duration="6948000" />
       <workItem from="1575461276943" duration="7461000" />
+      <workItem from="1575488639441" duration="615000" />
     </task>
     <servers />
   </component>
@@ -107,9 +101,9 @@
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
     <state width="1677" height="251" key="GridCell.Tab.0.right/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575485510792" />
-    <state x="295" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1575461374511">
+    <state x="295" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1575488641410">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state x="295" y="523" key="com.intellij.ide.util.TipDialog/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575461374511" />
+    <state x="295" y="523" key="com.intellij.ide.util.TipDialog/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575488641410" />
   </component>
 </project>
