@@ -34,6 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> citiesList = [];
 
+  AssetImage day = AssetImage("assets/img/day.jpg");
+  AssetImage night = AssetImage("assets/img/night.jpg");
+  AssetImage rain = AssetImage("assets/img/rain.jpg");
+
   @override
   void initState(){
     // TODO: implement initState
@@ -51,10 +55,59 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       drawer: generateDrawer(),
-      body: Center(
-        child: textStyled(cityTaken==null? "ville" : cityTaken, color: Colors.blue),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: night,
+            fit: BoxFit.cover
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            textStyled(cityTaken==null? "City not selected" : cityTaken, color: Colors.white, fontSize: 30.0, fontStyle: FontStyle.normal),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                textStyled(cityTaken==null? "" : cityTaken, color: Colors.white, fontSize: 50.0, fontStyle: FontStyle.normal),
+                Icon(Icons.wb_sunny, color: Colors.white, size: 50.0,)
+              ],
+            ),
+            textStyled(cityTaken==null? "" : cityTaken, color: Colors.white, fontSize: 35.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                displayStats(),
+                displayStats(),
+                displayStats(),
+                displayStats(),
+
+              ],
+            )
+          ],
+        )
       ),
     );
+  }
+  
+  // column stats
+  Column displayStats() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(Icons.arrow_drop_up, color: Colors.white,),
+        textStyled("23", color: Colors.white, fontWeight: FontWeight.bold)
+      ],
+    );
+  }
+
+  // generate all stats
+  List<Widget> allStats() {
+    List<Widget> l = [];
+
+    return  l;
   }
 
   // custom text in a function because we don't use other stateful widget
@@ -193,7 +246,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // shared preferences //
+
+
+  // API
+
+
+
+  //* shared preferences *//
 
   // read
   getListOfPref() async{
@@ -217,7 +276,6 @@ class _MyHomePageState extends State<MyHomePage> {
     await sharedPreferences.setStringList(key, citiesList);
     getListOfPref();
   }
-
   // delete
   deleteItemListOfPref(String str) async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
