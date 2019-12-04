@@ -30,11 +30,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   String key = "cities";
+  String cityTaken;
 
   List<String> citiesList = [];
 
   @override
-  void initState() {
+  void initState(){
     // TODO: implement initState
     super.initState();
     getListOfPref();
@@ -51,10 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: generateDrawer(),
       body: Center(
+        child: textStyled(cityTaken==null? "ville" : cityTaken, color: Colors.blue),
       ),
     );
   }
-  
+
+  // custom text in a function because we don't use other stateful widget
   Text textStyled(String data, {color: Colors.white, fontSize: 18.0, fontStyle: FontStyle.italic, fontWeight: FontWeight.normal, textAlign : TextAlign.center }) {
     return Text(
         data,
@@ -68,35 +71,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // generate listview builder
-  ListView generateCitiesItems() {
-    return ListView.builder(
-        itemCount: citiesList.length,
-        itemBuilder: (context, i) {
-          String city = citiesList[i];
-
-          return ListTile(
-            title: textStyled(city),
-            onTap: () {
-              key = city;
-            },
-            trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  deleteItemListOfPref(city);
-                }
-            ),
-          );
-        }
-    );
-  }
-
+  // drawer
   Widget generateDrawer() {
     print(citiesList);
     return Drawer(
       child: Container(
         color: Colors.deepPurple,
         child: ListView.builder(
+          // add +2 for setting between 0 & 1 custom boilerplate
           itemCount: citiesList.length+2,
           itemBuilder: (context, i) {
             if(i==0){
@@ -129,26 +111,39 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             } else if(i==1){
-              ListTile(
-                title: textStyled("Current city", color: Colors.white, fontSize: 25.0),
+             return ListTile(
+                title: textStyled("Current city".toUpperCase(), color: Colors.orangeAccent, fontSize: 20.0, fontStyle: FontStyle.normal),
+                leading: Icon(Icons.location_city, color: Colors.orangeAccent,),
                 onTap: () {
                   // Update the state of the app.
                   // ...
                 },
               );
-            }else{
-              String city = citiesList[i];
-              return ListTile(
-                title: textStyled(city),
-                onTap: () {
-                  key = city;
-                },
-                trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      deleteItemListOfPref(city);
-                    }
-                ),
+            }else {
+              // go back to real index
+              String city = citiesList[i-2];
+              print("ville : $city");
+              return Column(
+                children: <Widget>[
+                  Divider(
+                    color: Colors.white,
+                  ),
+                  ListTile(
+                    title: textStyled(city),
+                    onTap: () {
+                      setState(() {
+                        cityTaken = city;
+                        Navigator.pop(context);
+                      });
+                    },
+                    leading: IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red,),
+                        onPressed: () {
+                          deleteItemListOfPref(city);
+                        }
+                    ),
+                  ),
+                ],
               );
             }
           },
@@ -157,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // add city to drawer
+  // simple dialog : add city to drawer
   Future<Null> addCity() async{
     return showDialog(
         context: context,
@@ -168,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
             contentPadding: EdgeInsets.all(20.0),
             children: <Widget>[
               Divider(
-                color: Colors.black,
+                color: Colors.white,
               ),
               TextField(
                 style: TextStyle(
@@ -189,6 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 onSubmitted: (String str){
                   addItemListOfPref(str);
+                  Navigator.pop(context);
                 }
               ),
             ],
@@ -212,6 +208,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   // create
   addItemListOfPref(String str) async{
+    // lock the doublon possibility
+    if(citiesList.contains(str))
+      return;
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     citiesList.add(str);
     await sharedPreferences.setStringList(key, citiesList);

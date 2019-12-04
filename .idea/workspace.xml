@@ -2,24 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b63a8f2-ee1d-4c26-b3ed-67d0227088c1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/img/logo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/img/logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/flutter_weather.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/flutter_weather.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/app.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app.dill.track.dill.incremental.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/app.dill.track.dill.incremental.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/App.framework/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/App.framework/flutter_assets/kernel_blob.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +78,8 @@
       <workItem from="1575329150524" duration="77000" />
       <workItem from="1575329431259" duration="94000" />
       <workItem from="1575376073607" duration="8053000" />
-      <workItem from="1575409258550" duration="6904000" />
+      <workItem from="1575409258550" duration="6948000" />
+      <workItem from="1575461276943" duration="5080000" />
     </task>
     <servers />
   </component>
@@ -98,25 +87,25 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1677" height="382" key="GridCell.Tab.0.bottom" timestamp="1575424684072">
+    <state width="1677" height="251" key="GridCell.Tab.0.bottom" timestamp="1575476864346">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="1677" height="382" key="GridCell.Tab.0.bottom/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575424684072" />
-    <state width="1677" height="382" key="GridCell.Tab.0.center" timestamp="1575424684072">
+    <state width="1677" height="251" key="GridCell.Tab.0.bottom/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575476864346" />
+    <state width="1677" height="251" key="GridCell.Tab.0.center" timestamp="1575476864345">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="1677" height="382" key="GridCell.Tab.0.center/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575424684072" />
-    <state width="1677" height="382" key="GridCell.Tab.0.left" timestamp="1575424684071">
+    <state width="1677" height="251" key="GridCell.Tab.0.center/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575476864345" />
+    <state width="1677" height="251" key="GridCell.Tab.0.left" timestamp="1575476864345">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="1677" height="382" key="GridCell.Tab.0.left/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575424684071" />
-    <state width="1677" height="382" key="GridCell.Tab.0.right" timestamp="1575424684072">
+    <state width="1677" height="251" key="GridCell.Tab.0.left/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575476864345" />
+    <state width="1677" height="251" key="GridCell.Tab.0.right" timestamp="1575476864346">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="1677" height="382" key="GridCell.Tab.0.right/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575424684072" />
-    <state x="295" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1575409263354">
+    <state width="1677" height="251" key="GridCell.Tab.0.right/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575476864346" />
+    <state x="295" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1575461374511">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state x="295" y="523" key="com.intellij.ide.util.TipDialog/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575409263354" />
+    <state x="295" y="523" key="com.intellij.ide.util.TipDialog/2560.23.1440.2537/0.23.2560.1337@0.23.2560.1337" timestamp="1575461374511" />
   </component>
 </project>
