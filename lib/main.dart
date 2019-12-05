@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:location/location.dart';
+import 'package:geocoder/geocoder.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'Temperature.dart';
+import 'my_flutter_app_icons.dart';
 
-void main() => runApp(MyApp());
+Future main() async {
+  await DotEnv().load('.env');
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -31,6 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String key = "cities";
   String cityTaken;
+  String currentCityName;
+  Coordinates coordsCityTaken;
+
+  Temperature temperature;
 
   List<String> citiesList = [];
 
@@ -38,11 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
   AssetImage night = AssetImage("assets/img/night.jpg");
   AssetImage rain = AssetImage("assets/img/rain.jpg");
 
+  Location location;
+  Stream<LocationData> stream;
+  LocationData locationData;
+  LocationData currentLocation;
+
+
   @override
   void initState(){
     // TODO: implement initState
     super.initState();
     getListOfPref();
+    location = Location();
+    getCurrentLocation();
+    streamNewLocation();
   }
 
   @override
@@ -50,64 +76,80 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.blueGrey,
         title: textStyled(widget.title, fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
         centerTitle: true,
       ),
       drawer: generateDrawer(),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: night,
-            fit: BoxFit.cover
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            textStyled(cityTaken==null? "City not selected" : cityTaken, color: Colors.white, fontSize: 30.0, fontStyle: FontStyle.normal),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                textStyled(cityTaken==null? "" : cityTaken, color: Colors.white, fontSize: 50.0, fontStyle: FontStyle.normal),
-                Icon(Icons.wb_sunny, color: Colors.white, size: 50.0,)
-              ],
-            ),
-            textStyled(cityTaken==null? "" : cityTaken, color: Colors.white, fontSize: 35.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                displayStats(),
-                displayStats(),
-                displayStats(),
-                displayStats(),
-
-              ],
-            )
-          ],
+      body: (temperature==null?
+        Center(
+          child: textStyled(cityTaken!=null ? cityTaken : "", color: Colors.white),
         )
-      ),
+        :
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: getBackground(),
+                fit: BoxFit.cover
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              textStyled(cityTaken!=null? cityTaken.toUpperCase() : "", fontSize: 30.0, fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
+              Card(
+                child: Container(
+                  color: Colors.blueGrey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      textStyled("${temperature.temperature.toInt().toString()} °C", color: Colors.white, fontSize: 40.0, fontStyle: FontStyle.normal),
+
+                      //find solution to change icon status
+                      getStatusIcon()
+
+                    ],
+                  ),
+                ),
+                elevation: 20.0,
+              ),
+              textStyled(temperature.mainDescription, fontSize: 35.0),
+              textStyled(temperature.description, fontSize: 20.0, fontStyle: FontStyle.normal),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  displayStats(MyFlutterApp.temperatire, temperature.pressure.toInt().toString()),
+                  displayStats(MyFlutterApp.waves, temperature.humidity.toInt().toString()),
+                  displayStats(MyFlutterApp.down, temperature.minTemp.toInt().toString()),
+                  displayStats(MyFlutterApp.up, temperature.maxTemp.toInt().toString()),
+
+                ],
+              ),
+            ],
+          )
+      )
+      )
     );
   }
   
   // column stats
-  Column displayStats() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Icon(Icons.arrow_drop_up, color: Colors.white,),
-        textStyled("23", color: Colors.white, fontWeight: FontWeight.bold)
-      ],
+  Card displayStats(icon, String text) {
+    return Card(
+      elevation: 20.0,
+      child: Container(
+        color: Colors.blueGrey,
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(icon, color: Colors.white, size: 40.0,),
+            textStyled(text, color: Colors.white, fontWeight: FontWeight.bold)
+          ],
+        ),
+      ),
     );
-  }
-
-  // generate all stats
-  List<Widget> allStats() {
-    List<Widget> l = [];
-
-    return  l;
   }
 
   // custom text in a function because we don't use other stateful widget
@@ -129,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print(citiesList);
     return Drawer(
       child: Container(
-        color: Colors.deepPurple,
+        color: Colors.blueGrey,
         child: ListView.builder(
           // add +2 for setting between 0 & 1 custom boilerplate
           itemCount: citiesList.length+2,
@@ -165,17 +207,19 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             } else if(i==1){
              return ListTile(
-                title: textStyled("Current city".toUpperCase(), color: Colors.orangeAccent, fontSize: 20.0, fontStyle: FontStyle.normal),
+                title: textStyled(currentCityName.toUpperCase(), color: Colors.orangeAccent, fontSize: 20.0, fontStyle: FontStyle.normal),
                 leading: Icon(Icons.location_city, color: Colors.orangeAccent,),
                 onTap: () {
-                  // Update the state of the app.
-                  // ...
+                  setState(() {
+                    cityTaken = currentCityName;
+                    handleCityChange();
+                    Navigator.pop(context);
+                  });
                 },
               );
             }else {
               // go back to real index
               String city = citiesList[i-2];
-              print("ville : $city");
               return Column(
                 children: <Widget>[
                   Divider(
@@ -186,13 +230,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () {
                       setState(() {
                         cityTaken = city;
+                        handleCityChange();
                         Navigator.pop(context);
                       });
                     },
                     leading: IconButton(
                         icon: Icon(Icons.delete, color: Colors.red,),
                         onPressed: () {
-                          deleteItemListOfPref(city);
+                          setState(() {
+                            deleteItemListOfPref(city);
+                            setDefaultCity();
+                            Navigator.pop(context);
+                          });
                         }
                     ),
                   ),
@@ -246,10 +295,114 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // load by default the current location (city name)
+  setDefaultCity() async{
+    print("je ve set default");
+    if(currentCityName!=null)
+      setState(() {
+        cityTaken = currentCityName;
+        coordsCityTaken = Coordinates(currentLocation.latitude, currentLocation.longitude);
+        getDataFromApiByCoords();
+      });
+  }
+
+  // load city
+  handleCityChange() async{
+   await apiGetCoordsFromCityName();
+   await getDataFromApiByCoords();
+  }
 
 
-  // API
+  // get correct background
+  AssetImage getBackground() {
+    if(temperature!=null){
+      var tmp = temperature.icon;
+        if(tmp.contains("n")){
+          return night;
+        }else{
+          return day;
+        }
+    }
+  }
 
+  //* API *//
+
+  // get name
+  apiGetCityNameByCoords() async{
+    final coords = Coordinates(currentLocation.latitude, currentLocation.longitude);
+    var city = await Geocoder.local.findAddressesFromCoordinates(coords);
+    if(city!=null){
+      setState(() {
+        currentCityName = city.first.locality;
+      });
+    }
+  }
+
+  // get coords
+  apiGetCoordsFromCityName() async{
+    final query = cityTaken;
+    var city = await Geocoder.local.findAddressesFromQuery(query);
+    if(city!=null){
+      setState(() {
+        coordsCityTaken = city.first.coordinates;
+        print(coordsCityTaken);
+      });
+    }
+  }
+
+  // openweathermap
+  getDataFromApiByCoords() async{
+    String start = "https://api.openweathermap.org/data/2.5/weather?";
+    String lat = "lat=${coordsCityTaken.latitude.toString()}";
+    String lon = "&lon=${coordsCityTaken.longitude.toString()}";
+    String lang = "&lang=${Localizations.localeOf(context).languageCode}";
+    String units = "&units=metric";
+    String _apiKey = "&appid=${DotEnv().env['API_KEY']}";
+
+    var query = start + lat + lon + units + lang + _apiKey;
+    var response = await http.get(query);
+    if(response.statusCode==200){
+      Map jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
+      setState(() {
+        temperature = Temperature(jsonResponse);
+        print(temperature.temperature);
+      });
+    }
+  }
+
+  // get correct icon
+  getStatusIcon() {
+    String query = "http://openweathermap.org/img/wn/${temperature.icon}@2x.png";
+    return Image.network(query);
+  }
+
+
+  //* location *//
+
+  // getCurrentLocation
+  getCurrentLocation() async{
+    try{
+      currentLocation = await location.getLocation();
+      await apiGetCityNameByCoords();
+      setDefaultCity();
+      print("POS : ${currentLocation.longitude}");
+    } on PlatformException catch(e) {
+      if(e.code == "PERMISSION_DENIED"){
+        print("Permission denied");
+      }
+      currentLocation = null;
+    }
+  }
+
+  // streamNewLocation
+  streamNewLocation() async{
+    stream = await location.onLocationChanged();
+    stream.listen((newLocation) {
+      if(newLocation!=null && newLocation.latitude!=currentLocation.latitude && newLocation.longitude!=currentLocation.longitude)
+      currentLocation = newLocation;
+    });
+  }
 
 
   //* shared preferences *//
@@ -265,6 +418,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
+
   // create
   addItemListOfPref(String str) async{
     // lock the doublon possibility
