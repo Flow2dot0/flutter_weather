@@ -437,5 +437,4 @@ class _MyHomePageState extends State<MyHomePage> {
     await sharedPreferences.setStringList(key, citiesList);
     getListOfPref();
   }
-
 }
