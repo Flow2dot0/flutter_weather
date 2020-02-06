@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "935629037225",
+    "firebase_url": "https://litechat-d5011.firebaseio.com",
+    "project_id": "litechat-d5011",
+    "storage_bucket": "litechat-d5011.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935629037225:android:2e695568682fba7774d3b8",
+        "android_client_info": {
+          "package_name": "co.flow2dot0.flutter_lite_chat_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935629037225-9dqgjejjqco88i9emh314bb0fkmqc57g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVi21Mg4EJGSjx7tdoGEuekz1Zaq1LIH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935629037225-9dqgjejjqco88i9emh314bb0fkmqc57g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "935629037225-u6t4uooj1s3vc9fi6fm37p93i2l6b90u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flow2dot0.flutterLiteChatFirebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
